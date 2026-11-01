@@ -18,7 +18,8 @@
     "gate": "bash scripts/gate.sh",
     "review": "bash scripts/review.sh",
     "flaky": "bash scripts/flaky.sh",
-    "hunt": "bash scripts/hunt.sh"
+    "hunt": "bash scripts/hunt.sh",
+    "pipeline": "node scripts/pipeline.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.48.0",

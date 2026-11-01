@@ -39,7 +39,7 @@ Prove a test can fail: `npm run break-check` breaks one expectation on purpose, 
 | 4 | Playwright agents (planner/generator/healer) via OpenCode + free router: `npm run agent` | done (healer to try) |
 | 5 | Skills + hooks: `npm run gate`, gate plugin, write-playwright-test skill | done |
 | 6 | Custom agents: test reviewer (`npm run review`), flaky hunter | done (reviewer + flaky hunter verified) |
-| 7 | One-prompt pipeline AC -> tests | todo |
+| 7 | One-command pipeline: `npm run pipeline -- <feature>` (2 human gates) | built, needs testing |
 | 8 | CI (GitHub Actions) + bug report / maintenance agents | todo |
 | 9 | Prove it: break the app, measure time saved, pitch | todo |
 

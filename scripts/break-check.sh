@@ -18,8 +18,13 @@ trap 'cp "$BAK" "$FILE"; rm -f "$BAK"' EXIT
 # Break the first expected text inside the chosen test: toHaveText('..'), toContainText('..') or expectError('..')
 ID="$ID" perl -0pi -e 's/(test\(\x27$ENV{ID}(?:(?!\n\s*test\().)*?)\b(toHaveText|toContainText|expectError)\(([\x27\x22])(?:(?!\3).)*\3\)/$1$2(\x27BROKEN-ON-PURPOSE\x27)/s' "$FILE"
 
+# No text found? Try a list of expected texts: toHaveText([...]), toContainText([...]) or toEqual([...])
 if cmp -s "$FILE" "$BAK"; then
-  echo "Could not break $ID automatically (no toHaveText / toContainText / expectError with a text found in that test)."
+  ID="$ID" perl -0pi -e 's/(test\(\x27$ENV{ID}(?:(?!\n\s*test\().)*?)\b(toHaveText|toContainText|toEqual)\(\[(?:(?!\]\)).)*\]\)/$1$2([\x27BROKEN-ON-PURPOSE\x27])/s' "$FILE"
+fi
+
+if cmp -s "$FILE" "$BAK"; then
+  echo "Could not break $ID automatically (no toHaveText / toContainText / expectError / toEqual with a text or list found in that test)."
   echo "Break it by hand instead: change one expected value, run the test, it must fail, then undo."
   exit 2
 fi

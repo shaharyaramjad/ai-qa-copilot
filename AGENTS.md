@@ -58,3 +58,8 @@ Goal: AC -> reviewed test cases -> Playwright tests, with human approval between
 - `npm run flaky -- <spec> <test id> [runs] [workers]` runs one test many times in parallel and writes evidence to `ai-output/flaky-<id>.md`.
 - `npm run hunt -- <spec> <test id>` does that, then asks the read-only `flaky-hunter` agent for the root cause and a proposed fix (it never applies it).
 - `fixtures/flaky/` holds a deliberately flaky test (run through `playwright.fixtures.config.ts`). Do not fix it.
+
+## Pipeline (Step 7)
+- `npm run pipeline -- <feature>` runs the next stage and stops at two human gates: (1) you write verified answers to `docs/ac/<feature>.answers.md`, (2) you approve the drafted test cases with `--approve`.
+- Stages: AI review of `docs/ac/<feature>.md` -> AI drafts test cases -> approved cases in `docs/test-cases/` -> AI writes `tests/<feature>.spec.ts` (missing page object methods are added in a separate step) -> typecheck, tests, reviewer agent, break-check -> `ai-output/<feature>-pipeline-report.md`.
+- Never skip a gate, never approve cases for the human, never edit the approved cases to fit the tests.
