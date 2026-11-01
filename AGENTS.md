@@ -44,3 +44,8 @@ Goal: AC -> reviewed test cases -> Playwright tests, with human approval between
 - Generated tests must use the page objects in `pages/` and follow the conventions above. Move any raw selectors into a page object.
 - `tests/seed.spec.ts` is the agents' starting point (logs in). It is not a test case.
 - The healer may fix selectors and timing, never expected results. If the app is wrong, the test stays failing.
+
+## Gate, skill and plugin (Step 5)
+- `npm run gate` = typecheck + all tests. Run it before saying you are done.
+- `.opencode/plugins/test-gate.ts` runs the gate automatically when you finish after editing `tests/` or `pages/`, and sends failures back to you (max 2 rounds). It also blocks access to `.env`.
+- `.opencode/skills/write-playwright-test/` is the step-by-step recipe for new tests. Load it before writing tests.
