@@ -15,7 +15,8 @@
     "ai:automate": "node scripts/ai.mjs automate",
     "break-check": "bash scripts/break-check.sh",
     "agent": "bash scripts/agent.sh",
-    "gate": "bash scripts/gate.sh"
+    "gate": "bash scripts/gate.sh",
+    "review": "bash scripts/review.sh"
   },
   "devDependencies": {
     "@playwright/test": "^1.48.0",

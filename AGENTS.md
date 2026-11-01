@@ -49,3 +49,7 @@ Goal: AC -> reviewed test cases -> Playwright tests, with human approval between
 - `npm run gate` = typecheck + all tests. Run it before saying you are done.
 - `.opencode/plugins/test-gate.ts` runs the gate automatically when you finish after editing `tests/` or `pages/`, and sends failures back to you (max 2 rounds). It also blocks access to `.env`.
 - `.opencode/skills/write-playwright-test/` is the step-by-step recipe for new tests. Load it before writing tests.
+
+## Reviewer agent (Step 6)
+- `.opencode/agents/test-reviewer.md` is read-only. `npm run review -- <spec file or folder>` runs it and saves the report to `ai-output/review-*.md`.
+- `fixtures/bad-tests/` holds deliberately bad tests to check the reviewer. They are outside `tests/`, so the suite never runs them. Do not fix them.
