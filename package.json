@@ -16,7 +16,9 @@
     "break-check": "bash scripts/break-check.sh",
     "agent": "bash scripts/agent.sh",
     "gate": "bash scripts/gate.sh",
-    "review": "bash scripts/review.sh"
+    "review": "bash scripts/review.sh",
+    "flaky": "bash scripts/flaky.sh",
+    "hunt": "bash scripts/hunt.sh"
   },
   "devDependencies": {
     "@playwright/test": "^1.48.0",

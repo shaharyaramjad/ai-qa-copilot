@@ -53,3 +53,8 @@ Goal: AC -> reviewed test cases -> Playwright tests, with human approval between
 ## Reviewer agent (Step 6)
 - `.opencode/agents/test-reviewer.md` is read-only. `npm run review -- <spec file or folder>` runs it and saves the report to `ai-output/review-*.md`.
 - `fixtures/bad-tests/` holds deliberately bad tests to check the reviewer. They are outside `tests/`, so the suite never runs them. Do not fix them.
+
+## Flaky hunter (Step 6)
+- `npm run flaky -- <spec> <test id> [runs] [workers]` runs one test many times in parallel and writes evidence to `ai-output/flaky-<id>.md`.
+- `npm run hunt -- <spec> <test id>` does that, then asks the read-only `flaky-hunter` agent for the root cause and a proposed fix (it never applies it).
+- `fixtures/flaky/` holds a deliberately flaky test (run through `playwright.fixtures.config.ts`). Do not fix it.
