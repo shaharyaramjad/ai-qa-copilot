@@ -37,7 +37,7 @@ Prove a test can fail: `npm run break-check` breaks one expectation on purpose, 
 | 2 | Free model router (FreeLLMAPI), see `docs/setup/free-models.md` | done |
 | 3 | Prompt templates and AI commands (`npm run ai:*`) | done |
 | 4 | Playwright agents (planner/generator/healer) via OpenCode + free router: `npm run agent` | done (healer to try) |
-| 5 | Skills + hooks (run tests before the agent can finish) | todo |
+| 5 | Skills + hooks: `npm run gate`, gate plugin, write-playwright-test skill | done |
 | 6 | Custom agents: test reviewer, flaky hunter | todo |
 | 7 | One-prompt pipeline AC -> tests | todo |
 | 8 | CI (GitHub Actions) + bug report / maintenance agents | todo |
