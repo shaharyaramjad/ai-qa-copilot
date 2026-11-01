@@ -176,6 +176,14 @@ rep.review = rs ? `${rs[1]} of ${rs[2]} tests flagged (${rs[3]} findings)` : 're
 rep.reviewOut = rv.out;
 say(`Reviewer: ${rep.review}`);
 
+const cf = sh('node', ['scripts/conformance.mjs', P.spec, P.approved], { show: false });
+const cs = cf.out.match(/Conformance: (\d+) of (\d+)/);
+rep.conformance = cs ? `${cs[1]} of ${cs[2]} approved cases assert their concrete values literally` : 'conformance check did not run';
+rep.conformanceOk = cf.code === 0;
+rep.conformanceOut = cf.out;
+say(`Conformance with the approved cases: ${rep.conformance}`);
+if (!rep.conformanceOk) say(cf.out.split('\n').filter((l) => /MISSING/.test(l)).map((l) => '  ' + l.slice(0, 160)).join('\n'));
+
 if (rep.testsOk) {
   const all = ids(P.spec);
   const pick = [...new Set([all[0], all[Math.floor(all.length / 2)], all[all.length - 1]])].filter(Boolean);
@@ -196,16 +204,17 @@ const gate = state.events.find((e) => e.stage.startsWith('GATE 2'));
 const first = state.events[0];
 let md = `# Pipeline report: ${feature}\n\nGenerated ${new Date().toISOString()}\n\n`;
 md += `| Stage | Result |\n|---|---|\n`;
-md += `| Typecheck | ${rep.typecheck} |\n| Tests | ${rep.tests} |\n| Reviewer agent | ${rep.review} |\n`;
+md += `| Typecheck | ${rep.typecheck} |\n| Tests | ${rep.tests} |\n| Reviewer agent | ${rep.review} |\n| Conformance | ${rep.conformance} |\n`;
 rep.breaks.forEach((b) => { md += `| Break check | ${b} |\n`; });
 md += `\n## Time\n- AI working time (review, cases, tests): about ${ai} seconds\n`;
 if (first) md += `- First stage started: ${first.at}\n`;
 if (gate) md += `- Test cases approved by a human at: ${gate.at}\n`;
 md += `\n## Human gates\n- Gate 1: ${existsSync(P.answers) ? 'answers written by a human' : 'missing'}\n- Gate 2: ${existsSync(P.approved) ? 'test cases approved by a human' : 'missing'}\n`;
 md += `\n## Stages\n${state.events.map((e) => `- ${e.at} ${e.stage}${e.seconds ? ` (${e.seconds}s)` : ''}${e.note ? ` ${e.note}` : ''}`).join('\n')}\n`;
+md += `\n## Conformance details\n\`\`\`\n${rep.conformanceOut || ''}\`\`\`\n`;
 md += `\n## Reviewer output\n${rep.reviewOut || ''}\n`;
 writeFileSync(P.report, md);
 say(`\nReport saved: ${P.report}`);
-say(rep.typecheck === 'PASS' && rep.testsOk && rep.breaks.every((b) => /PASS$/.test(b)) && rs && rs[1] === '0'
+say(rep.typecheck === 'PASS' && rep.testsOk && rep.conformanceOk && rep.breaks.every((b) => /PASS$/.test(b)) && rs && rs[1] === '0'
   ? '\nPIPELINE RESULT: all checks passed. Read the tests once, then commit.'
   : '\nPIPELINE RESULT: needs your attention. Read the report above.');

@@ -19,7 +19,8 @@
     "review": "bash scripts/review.sh",
     "flaky": "bash scripts/flaky.sh",
     "hunt": "bash scripts/hunt.sh",
-    "pipeline": "node scripts/pipeline.mjs"
+    "pipeline": "node scripts/pipeline.mjs",
+    "conformance": "node scripts/conformance.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.48.0",

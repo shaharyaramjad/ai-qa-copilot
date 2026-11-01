@@ -21,6 +21,7 @@ Check every test for these problems:
 5. FIXED WAITS: `waitForTimeout`, `setTimeout`, sleeps. Use web-first assertions.
 6. HIDING FLAKINESS: retries, `test.skip`, `test.fixme` or `test.fail` without a stated app bug.
 7. NAMING: the test name must start with a test case ID like TC-CART-02. More than one behavior in one test is also a problem.
+8. EXPECTATION FROM THE APP'S OWN OUTPUT: the expected value is computed from the same data the test reads (for example `[...names].sort()` compared with `names`), or a list could be empty, so the test can pass with a wrong or empty list. Literal expected values and a length check are needed.
 
 Rules for your report:
 - Only report a problem if you can quote the exact line and give its line number. Never invent problems.
