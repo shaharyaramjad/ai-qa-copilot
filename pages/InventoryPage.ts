@@ -17,10 +17,11 @@ export class InventoryPage {
     this.cartBadge = page.getByTestId('shopping-cart-badge');
   }
 
-  async expectLoaded() {
-    await expect(this.page).toHaveURL(/inventory\.html/);
-    await expect(this.title).toHaveText('Products');
-    await expect(this.itemList).toBeVisible();
+  /** Pass a longer timeout (ms) for slow users such as performance_glitch_user. */
+  async expectLoaded(timeout?: number) {
+    await expect(this.page).toHaveURL(/inventory\.html/, { timeout });
+    await expect(this.title).toHaveText('Products', { timeout });
+    await expect(this.itemList).toBeVisible({ timeout });
   }
 
   /** slug example: 'sauce-labs-backpack' */

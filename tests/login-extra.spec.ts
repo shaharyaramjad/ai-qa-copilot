@@ -25,10 +25,9 @@ test.describe('Login (Extra)', () => {
     // 1. Open `/`
     // 2. Enter `performance_glitch_user` and `secret_sauce`, click Login
     await login.login('performance_glitch_user', 'secret_sauce');
-    // The performance glitch user takes a long time to log in, so increase timeout for inventory page
-    const inventory = new InventoryPage(page);
-    await expect(page).toHaveURL(/inventory\.html/, { timeout: 10000 });
-    await inventory.expectLoaded();
+    // The URL changes at once, but this user's inventory page renders several seconds later.
+    // Give every check inside expectLoaded a longer limit (no fixed wait).
+    await new InventoryPage(page).expectLoaded(20_000);
   });
 
   test('TC-LOGIN-09 inventory cannot be opened without logging in', async ({ page }) => {
