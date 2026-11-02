@@ -40,8 +40,21 @@ Prove a test can fail: `npm run break-check` breaks one expectation on purpose, 
 | `npm run flaky -- <spec> <id>` | Runs one test many times in parallel and writes evidence. |
 | `npm run hunt -- <spec> <id>` | Same, then the flaky-hunter agent names the root cause. It proposes a fix but never applies it. |
 | `npm run conformance -- <spec> <cases>` | Checks a spec asserts the concrete values from the approved test cases. |
+| `npm run bdd` | BDD suite (pilot): runs the Gherkin scenarios in `features/` through `steps/` and the page objects. Separate report in `playwright-report-bdd/`. |
 | `npm run bug-demo` | Runs the sorting tests as `standard_user` and as `problem_user` (SauceDemo's buggy user). |
 | `npm run agent` | Opens OpenCode with the Playwright planner, generator and healer. |
+
+## BDD and page objects (pilot on login)
+
+Two layers, kept apart:
+
+| Layer | Where | Job |
+|---|---|---|
+| Scenarios (Given / When / Then) | `features/login.feature` | Readable behaviour, one tag per approved test case (`@TC-LOGIN-01` ...) |
+| Steps | `steps/*.steps.ts` | Plain-English sentences wired to code. No selectors here. |
+| Page objects | `pages/*.ts` | Selectors and actions. Know nothing about Gherkin. |
+
+`steps/fixtures.ts` hands the page objects to the steps as fixtures. Run with `npm run bdd`; it uses `playwright.bdd.config.ts` (tool: playwright-bdd), so the 31 classic tests and CI are untouched. Prove a scenario can fail: change one quoted value in the `.feature` (e.g. `"locked out"` to `"locked in"`), run `npm run bdd -- --grep TC-LOGIN-05`, it must fail, then undo.
 
 ## CI
 
