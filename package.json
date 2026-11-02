@@ -20,7 +20,8 @@
     "flaky": "bash scripts/flaky.sh",
     "hunt": "bash scripts/hunt.sh",
     "pipeline": "node scripts/pipeline.mjs",
-    "conformance": "node scripts/conformance.mjs"
+    "conformance": "node scripts/conformance.mjs",
+    "bug-demo": "bash scripts/bug-demo.sh"
   },
   "devDependencies": {
     "@playwright/test": "^1.48.0",

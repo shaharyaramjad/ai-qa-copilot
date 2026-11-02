@@ -11,7 +11,8 @@ test.describe('Sorting', () => {
     login = new LoginPage(page);
     inventory = new InventoryPage(page);
     await login.goto();
-    await login.login('standard_user', 'secret_sauce');
+    // SAUCE_USER lets scripts/bug-demo.sh run the same tests as another SauceDemo user (default: standard_user)
+    await login.login(process.env.SAUCE_USER ?? 'standard_user', 'secret_sauce');
     await inventory.expectLoaded();
   });
 
