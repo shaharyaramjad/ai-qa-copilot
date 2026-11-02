@@ -42,6 +42,7 @@ Prove a test can fail: `npm run break-check` breaks one expectation on purpose, 
 | `npm run conformance -- <spec> <cases>` | Checks a spec asserts the concrete values from the approved test cases. |
 | `npm run bdd` | BDD suite (pilot): runs the Gherkin scenarios in `features/` through `steps/` and the page objects. Separate report in `playwright-report-bdd/`. |
 | `npm run forensics -- [spec] [--baseline KEY=value]` | Failure forensics: for each failed test writes a case file (evidence plus verdict: app bug, test code, selector, flaky, environment) to `ai-output/forensics/`. Re-runs each failure to detect flakiness; with `--baseline` re-runs it in a known-good context. Never edits tests. |
+| `npm run test:unit` | Unit tests for the forensics rules (no browser, no network, no AI). |
 | `npm run forensics:demo` | Forensics on the sorting tests as `problem_user`, with `standard_user` as baseline. |
 | `npm run bug-demo` | Runs the sorting tests as `standard_user` and as `problem_user` (SauceDemo's buggy user). |
 | `npm run agent` | Opens OpenCode with the Playwright planner, generator and healer. |
@@ -72,6 +73,14 @@ When a test fails, `npm run forensics` answers "why" with evidence instead of a 
 | APP BUG OR WRONG EXPECTED VALUE | Fails every time, no baseline: a human compares with the approved test case |
 
 Rules are deterministic (no AI needed), verdicts say "likely", and forensics never changes a test or an expected value. The classifier is checked offline on `fixtures/forensics/sample-report.json`; run it with `node scripts/forensics.mjs --from fixtures/forensics/sample-report.json`.
+
+## Open source and contributing
+
+MIT licensed. The hard question this project works on: **can you trust an AI-written test, and when a test fails, why?** You do not need an AI key to help.
+
+- Add a **failure forensics rule** by dropping one file into `scripts/forensics/rules/` (no AI, no browser needed to test it: `npm run test:unit`).
+- Pick a starter task from `docs/good-first-issues.md`.
+- Read `CONTRIBUTING.md` first. The one rule: never make a test pass by changing its expected value.
 
 ## CI
 

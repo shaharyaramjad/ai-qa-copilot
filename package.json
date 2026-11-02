@@ -10,6 +10,7 @@
     "bdd": "bddgen -c playwright.bdd.config.ts && playwright test -c playwright.bdd.config.ts",
     "report": "playwright show-report",
     "typecheck": "tsc --noEmit",
+    "test:unit": "node --test",
     "check:llm": "bash scripts/check-llm.sh",
     "ai:review": "node scripts/ai.mjs review",
     "ai:cases": "node scripts/ai.mjs cases",
@@ -35,5 +36,10 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shaharyaramjad/ai-qa-copilot.git"
   }
 }
