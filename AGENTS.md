@@ -75,3 +75,8 @@ Goal: AC -> reviewed test cases -> Playwright tests, with human approval between
 - Step wording is reusable: one parametrised step (`I log in as {string} with password {string}`), not one step per scenario.
 - Do not change an expected value in a `.feature` file to make a scenario pass.
 
+## Forensics
+- `npm run forensics` investigates failed tests and writes case files to `ai-output/forensics/` (generated, git-ignored; commit one with `git add -f` only as proof).
+- Verdicts come from deterministic rules in `scripts/forensics.mjs`: environment, test code, selector, flaky (repeat runs), app bug likely (fails here, passes in the `--baseline` context).
+- Forensics never edits tests or expected values. A failing assertion with a matching approved value is a bug report, not a test fix.
+

@@ -41,6 +41,8 @@ Prove a test can fail: `npm run break-check` breaks one expectation on purpose, 
 | `npm run hunt -- <spec> <id>` | Same, then the flaky-hunter agent names the root cause. It proposes a fix but never applies it. |
 | `npm run conformance -- <spec> <cases>` | Checks a spec asserts the concrete values from the approved test cases. |
 | `npm run bdd` | BDD suite (pilot): runs the Gherkin scenarios in `features/` through `steps/` and the page objects. Separate report in `playwright-report-bdd/`. |
+| `npm run forensics -- [spec] [--baseline KEY=value]` | Failure forensics: for each failed test writes a case file (evidence plus verdict: app bug, test code, selector, flaky, environment) to `ai-output/forensics/`. Re-runs each failure to detect flakiness; with `--baseline` re-runs it in a known-good context. Never edits tests. |
+| `npm run forensics:demo` | Forensics on the sorting tests as `problem_user`, with `standard_user` as baseline. |
 | `npm run bug-demo` | Runs the sorting tests as `standard_user` and as `problem_user` (SauceDemo's buggy user). |
 | `npm run agent` | Opens OpenCode with the Playwright planner, generator and healer. |
 
@@ -55,6 +57,21 @@ Two layers, kept apart:
 | Page objects | `pages/*.ts` | Selectors and actions. Know nothing about Gherkin. |
 
 `steps/fixtures.ts` hands the page objects to the steps as fixtures. Run with `npm run bdd`; it uses `playwright.bdd.config.ts` (tool: playwright-bdd), so the 31 classic tests and CI are untouched. Prove a scenario can fail: change one quoted value in the `.feature` (e.g. `"locked out"` to `"locked in"`), run `npm run bdd -- --grep TC-LOGIN-05`, it must fail, then undo.
+
+## Failure forensics
+
+When a test fails, `npm run forensics` answers "why" with evidence instead of a guess. For every failure it writes a case file with the error, expected versus received, the failing line, screenshot and trace paths, and a verdict:
+
+| Verdict | Evidence it needs |
+|---|---|
+| ENVIRONMENT | Network error (`net::ERR_...`), not a test result |
+| TEST CODE | `ReferenceError`, `TypeError` in the test or a page object |
+| TEST (SELECTOR) | Locator matches several elements |
+| FLAKY | Same test passes in some of N identical re-runs |
+| APP BUG (likely) | Fails every time, and the same test passes in the baseline context (for example `standard_user`) |
+| APP BUG OR WRONG EXPECTED VALUE | Fails every time, no baseline: a human compares with the approved test case |
+
+Rules are deterministic (no AI needed), verdicts say "likely", and forensics never changes a test or an expected value. The classifier is checked offline on `fixtures/forensics/sample-report.json`; run it with `node scripts/forensics.mjs --from fixtures/forensics/sample-report.json`.
 
 ## CI
 

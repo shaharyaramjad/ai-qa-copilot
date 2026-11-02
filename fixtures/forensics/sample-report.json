@@ -1,0 +1,342 @@
+{
+  "suites": [
+    {
+      "title": "sorting.spec.ts",
+      "file": "tests/sorting.spec.ts",
+      "specs": [
+        {
+          "title": "TC-SORT-03 Sort by Name (Z to A)",
+          "file": "tests/sorting.spec.ts",
+          "tests": [
+            {
+              "projectName": "chromium",
+              "status": "unexpected",
+              "results": [
+                {
+                  "status": "failed",
+                  "duration": 1000,
+                  "errors": [
+                    {
+                      "message": "Error: expect(received).toEqual(expected) // deep equality\n\n- Expected  - 3\n+ Received  + 3\n\n  Array [\n-   \"Test.allTheThings() T-Shirt (Red)\",\n-   \"Sauce Labs Onesie\",\n+   \"Sauce Labs Backpack\",\n+   \"Sauce Labs Bike Light\",\n  ]",
+                      "stack": "Error: expect(received).toEqual(expected) // deep equality\n\n- Expected  - 3\n+ Received  + 3\n\n  Array [\n-   \"Test.allTheThings() T-Shirt (Red)\",\n-   \"Sauce Labs Onesie\",\n+   \"Sauce Labs Backpack\",\n+   \"Sauce Labs Bike Light\",\n  ]\n    at tests/sorting.spec.ts:41:5",
+                      "location": {
+                        "file": "/x/tests/sorting.spec.ts",
+                        "line": 41,
+                        "column": 5
+                      },
+                      "snippet": "  > 41 | expect(names).toEqual(...)"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "path": "test-results/TC-SORT-/test-failed-1.png",
+                      "contentType": "image/png"
+                    },
+                    {
+                      "name": "trace",
+                      "path": "test-results/TC-SORT-/trace.zip",
+                      "contentType": "application/zip"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "error": {
+                    "message": "Error: expect(received).toEqual(expected) // deep equality\n\n- Expected  - 3\n+ Received  + 3\n\n  Array [\n-   \"Test.allTheThings() T-Shirt (Red)\",\n-   \"Sauce Labs Onesie\",\n+   \"Sauce Labs Backpack\",\n+   \"Sauce Labs Bike Light\",\n  ]",
+                    "stack": "Error: expect(received).toEqual(expected) // deep equality\n\n- Expected  - 3\n+ Received  + 3\n\n  Array [\n-   \"Test.allTheThings() T-Shirt (Red)\",\n-   \"Sauce Labs Onesie\",\n+   \"Sauce Labs Backpack\",\n+   \"Sauce Labs Bike Light\",\n  ]\n    at tests/sorting.spec.ts:41:5",
+                    "location": {
+                      "file": "/x/tests/sorting.spec.ts",
+                      "line": 41,
+                      "column": 5
+                    },
+                    "snippet": "  > 41 | expect(names).toEqual(...)"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "TC-SORT-04 Sort by Price (low to high)",
+          "file": "tests/sorting.spec.ts",
+          "tests": [
+            {
+              "projectName": "chromium",
+              "status": "unexpected",
+              "results": [
+                {
+                  "status": "failed",
+                  "duration": 1000,
+                  "errors": [
+                    {
+                      "message": "Error: expect(received).toEqual(expected) // deep equality\n\nExpected: [7.99, 9.99, 15.99, 15.99, 29.99, 49.99]\nReceived: [29.99, 9.99, 15.99, 49.99, 7.99, 15.99]",
+                      "stack": "Error: expect(received).toEqual(expected) // deep equality\n\nExpected: [7.99, 9.99, 15.99, 15.99, 29.99, 49.99]\nReceived: [29.99, 9.99, 15.99, 49.99, 7.99, 15.99]\n    at tests/sorting.spec.ts:52:5",
+                      "location": {
+                        "file": "/x/tests/sorting.spec.ts",
+                        "line": 52,
+                        "column": 5
+                      },
+                      "snippet": "  > 52 | expect(names).toEqual(...)"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "path": "test-results/TC-SORT-/test-failed-1.png",
+                      "contentType": "image/png"
+                    },
+                    {
+                      "name": "trace",
+                      "path": "test-results/TC-SORT-/trace.zip",
+                      "contentType": "application/zip"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "error": {
+                    "message": "Error: expect(received).toEqual(expected) // deep equality\n\nExpected: [7.99, 9.99, 15.99, 15.99, 29.99, 49.99]\nReceived: [29.99, 9.99, 15.99, 49.99, 7.99, 15.99]",
+                    "stack": "Error: expect(received).toEqual(expected) // deep equality\n\nExpected: [7.99, 9.99, 15.99, 15.99, 29.99, 49.99]\nReceived: [29.99, 9.99, 15.99, 49.99, 7.99, 15.99]\n    at tests/sorting.spec.ts:52:5",
+                    "location": {
+                      "file": "/x/tests/sorting.spec.ts",
+                      "line": 52,
+                      "column": 5
+                    },
+                    "snippet": "  > 52 | expect(names).toEqual(...)"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "TC-SORT-07 Selecting the active option changes nothing",
+          "file": "tests/sorting.spec.ts",
+          "tests": [
+            {
+              "projectName": "chromium",
+              "status": "unexpected",
+              "results": [
+                {
+                  "status": "failed",
+                  "duration": 1000,
+                  "errors": [
+                    {
+                      "message": "Error: page.goto: net::ERR_TIMED_OUT at https://www.saucedemo.com/\nCall log:\n  - navigating to \"https://www.saucedemo.com/\", waiting until \"load\"",
+                      "stack": "Error: page.goto: net::ERR_TIMED_OUT at https://www.saucedemo.com/\nCall log:\n  - navigating to \"https://www.saucedemo.com/\", waiting until \"load\"\n    at tests/sorting.spec.ts:20:5",
+                      "location": {
+                        "file": "/x/tests/sorting.spec.ts",
+                        "line": 20,
+                        "column": 5
+                      },
+                      "snippet": "  > 20 | expect(names).toEqual(...)"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "path": "test-results/TC-SORT-/test-failed-1.png",
+                      "contentType": "image/png"
+                    },
+                    {
+                      "name": "trace",
+                      "path": "test-results/TC-SORT-/trace.zip",
+                      "contentType": "application/zip"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "error": {
+                    "message": "Error: page.goto: net::ERR_TIMED_OUT at https://www.saucedemo.com/\nCall log:\n  - navigating to \"https://www.saucedemo.com/\", waiting until \"load\"",
+                    "stack": "Error: page.goto: net::ERR_TIMED_OUT at https://www.saucedemo.com/\nCall log:\n  - navigating to \"https://www.saucedemo.com/\", waiting until \"load\"\n    at tests/sorting.spec.ts:20:5",
+                    "location": {
+                      "file": "/x/tests/sorting.spec.ts",
+                      "line": 20,
+                      "column": 5
+                    },
+                    "snippet": "  > 20 | expect(names).toEqual(...)"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "TC-SORT-08 Verify sort dropdown options",
+          "file": "tests/sorting.spec.ts",
+          "tests": [
+            {
+              "projectName": "chromium",
+              "status": "unexpected",
+              "results": [
+                {
+                  "status": "failed",
+                  "duration": 1000,
+                  "errors": [
+                    {
+                      "message": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByTestId('product-sort-container')\nExpected: visible\nReceived: <element(s) not found>\nTimeout: 5000ms",
+                      "stack": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByTestId('product-sort-container')\nExpected: visible\nReceived: <element(s) not found>\nTimeout: 5000ms\n    at tests/sorting.spec.ts:88:5",
+                      "location": {
+                        "file": "/x/tests/sorting.spec.ts",
+                        "line": 88,
+                        "column": 5
+                      },
+                      "snippet": "  > 88 | expect(names).toEqual(...)"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "path": "test-results/TC-SORT-/test-failed-1.png",
+                      "contentType": "image/png"
+                    },
+                    {
+                      "name": "trace",
+                      "path": "test-results/TC-SORT-/trace.zip",
+                      "contentType": "application/zip"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "error": {
+                    "message": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByTestId('product-sort-container')\nExpected: visible\nReceived: <element(s) not found>\nTimeout: 5000ms",
+                    "stack": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByTestId('product-sort-container')\nExpected: visible\nReceived: <element(s) not found>\nTimeout: 5000ms\n    at tests/sorting.spec.ts:88:5",
+                    "location": {
+                      "file": "/x/tests/sorting.spec.ts",
+                      "line": 88,
+                      "column": 5
+                    },
+                    "snippet": "  > 88 | expect(names).toEqual(...)"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "TC-SORT-09 Sort and filter",
+          "file": "tests/sorting.spec.ts",
+          "tests": [
+            {
+              "projectName": "chromium",
+              "status": "unexpected",
+              "results": [
+                {
+                  "status": "failed",
+                  "duration": 1000,
+                  "errors": [
+                    {
+                      "message": "Error: strict mode violation: getByTestId('inventory-item-name') resolved to 6 elements",
+                      "stack": "Error: strict mode violation: getByTestId('inventory-item-name') resolved to 6 elements\n    at tests/sorting.spec.ts:95:5",
+                      "location": {
+                        "file": "/x/tests/sorting.spec.ts",
+                        "line": 95,
+                        "column": 5
+                      },
+                      "snippet": "  > 95 | expect(names).toEqual(...)"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "path": "test-results/TC-SORT-/test-failed-1.png",
+                      "contentType": "image/png"
+                    },
+                    {
+                      "name": "trace",
+                      "path": "test-results/TC-SORT-/trace.zip",
+                      "contentType": "application/zip"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "error": {
+                    "message": "Error: strict mode violation: getByTestId('inventory-item-name') resolved to 6 elements",
+                    "stack": "Error: strict mode violation: getByTestId('inventory-item-name') resolved to 6 elements\n    at tests/sorting.spec.ts:95:5",
+                    "location": {
+                      "file": "/x/tests/sorting.spec.ts",
+                      "line": 95,
+                      "column": 5
+                    },
+                    "snippet": "  > 95 | expect(names).toEqual(...)"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "TC-SORT-10 Cart badge",
+          "file": "tests/sorting.spec.ts",
+          "tests": [
+            {
+              "projectName": "chromium",
+              "status": "unexpected",
+              "results": [
+                {
+                  "status": "failed",
+                  "duration": 1000,
+                  "errors": [
+                    {
+                      "message": "ReferenceError: cartPage is not defined",
+                      "stack": "ReferenceError: cartPage is not defined\n    at tests/sorting.spec.ts:99:5",
+                      "location": {
+                        "file": "/x/tests/sorting.spec.ts",
+                        "line": 99,
+                        "column": 5
+                      },
+                      "snippet": "  > 99 | expect(names).toEqual(...)"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "path": "test-results/TC-SORT-/test-failed-1.png",
+                      "contentType": "image/png"
+                    },
+                    {
+                      "name": "trace",
+                      "path": "test-results/TC-SORT-/trace.zip",
+                      "contentType": "application/zip"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "error": {
+                    "message": "ReferenceError: cartPage is not defined",
+                    "stack": "ReferenceError: cartPage is not defined\n    at tests/sorting.spec.ts:99:5",
+                    "location": {
+                      "file": "/x/tests/sorting.spec.ts",
+                      "line": 99,
+                      "column": 5
+                    },
+                    "snippet": "  > 99 | expect(names).toEqual(...)"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "TC-SORT-02 Default sort order is Name (A to Z)",
+          "file": "tests/sorting.spec.ts",
+          "tests": [
+            {
+              "projectName": "chromium",
+              "status": "expected",
+              "results": [
+                {
+                  "status": "passed",
+                  "duration": 1000,
+                  "errors": [],
+                  "attachments": [],
+                  "stdout": [],
+                  "stderr": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
