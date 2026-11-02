@@ -7,8 +7,10 @@
     "test": "playwright test",
     "test:ui": "playwright test --ui",
     "test:headed": "playwright test --headed",
+    "bdd": "bddgen -c playwright.bdd.config.ts && playwright test -c playwright.bdd.config.ts",
     "report": "playwright show-report",
     "typecheck": "tsc --noEmit",
+    "test:unit": "node --test",
     "check:llm": "bash scripts/check-llm.sh",
     "ai:review": "node scripts/ai.mjs review",
     "ai:cases": "node scripts/ai.mjs cases",
@@ -19,6 +21,8 @@
     "review": "bash scripts/review.sh",
     "flaky": "bash scripts/flaky.sh",
     "hunt": "bash scripts/hunt.sh",
+    "forensics": "node scripts/forensics.mjs",
+    "forensics:demo": "SAUCE_USER=problem_user node scripts/forensics.mjs tests/sorting.spec.ts --baseline SAUCE_USER=standard_user",
     "pipeline": "node scripts/pipeline.mjs",
     "conformance": "node scripts/conformance.mjs",
     "bug-demo": "bash scripts/bug-demo.sh",
@@ -27,9 +31,15 @@
   "devDependencies": {
     "@playwright/test": "^1.48.0",
     "@types/node": "^22.0.0",
+    "playwright-bdd": "^9.2.1",
     "typescript": "^5.6.0"
   },
   "engines": {
     "node": ">=20"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shaharyaramjad/ai-qa-copilot.git"
   }
 }

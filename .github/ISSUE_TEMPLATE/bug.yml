@@ -1,0 +1,16 @@
+name: Bug report
+description: Something in the framework does not work as documented
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you ran, what you expected, what you got. Paste the command and the output (remove any keys).
+    validations: { required: true }
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      description: OS, Node version, Playwright version
+    validations: { required: true }

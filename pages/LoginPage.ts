@@ -27,4 +27,9 @@ export class LoginPage {
     await expect(this.error).toBeVisible();
     await expect(this.error).toContainText(text);
   }
+
+  async expectOnLoginPage() {
+    await expect(this.page).not.toHaveURL(/inventory/);
+    await expect(this.loginButton).toBeVisible();
+  }
 }

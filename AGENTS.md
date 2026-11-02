@@ -67,3 +67,16 @@ Goal: AC -> reviewed test cases -> Playwright tests, with human approval between
 
 ## CI (Step 8)
 - `.github/workflows/tests.yml` runs typecheck, `npm run conformance:all` and the whole suite on every push and nightly. No AI calls, no secrets in CI. A red CI run is a signal to investigate, never to edit a test to get green.
+
+## BDD (pilot on login)
+- Gherkin lives in `features/*.feature`, steps in `steps/*.steps.ts`, run with `npm run bdd` (`playwright.bdd.config.ts`, playwright-bdd). Generated tests go to `.features-gen/` (git-ignored, never edit).
+- Every scenario carries the approved test case ID as a tag (`@TC-LOGIN-01`). Expected values (error texts, names) are literal strings in the `.feature` file, taken from the approved test cases.
+- Steps call page objects only (via fixtures in `steps/fixtures.ts`). No selectors or `page.locator` in steps. New action or check = new method in `pages/`.
+- Step wording is reusable: one parametrised step (`I log in as {string} with password {string}`), not one step per scenario.
+- Do not change an expected value in a `.feature` file to make a scenario pass.
+
+## Forensics
+- `npm run forensics` investigates failed tests and writes case files to `ai-output/forensics/` (generated, git-ignored; commit one with `git add -f` only as proof).
+- Verdicts come from deterministic rules in `scripts/forensics.mjs`: environment, test code, selector, flaky (repeat runs), app bug likely (fails here, passes in the `--baseline` context).
+- Forensics never edits tests or expected values. A failing assertion with a matching approved value is a bug report, not a test fix.
+

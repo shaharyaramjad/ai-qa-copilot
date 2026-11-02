@@ -1,0 +1,14 @@
+name: Idea or feature
+description: A new check, example app, prompt or integration
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does it solve
+    validations: { required: true }
+  - type: textarea
+    id: how
+    attributes:
+      label: How would you check it works
+      description: A failing case you would use to prove it (see CONTRIBUTING.md).

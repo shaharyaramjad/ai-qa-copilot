@@ -11,3 +11,10 @@ playwright/.cache/
 
 # Playwright MCP logs
 .playwright-mcp/
+
+# BDD generated tests and report
+.features-gen/
+playwright-report-bdd/
+
+# Forensics case files (generated)
+ai-output/forensics/

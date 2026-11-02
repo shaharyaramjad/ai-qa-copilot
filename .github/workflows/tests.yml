@@ -34,6 +34,9 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
+      - name: Unit tests (forensics rules)
+        run: npm run test:unit
+
       - name: Tests match the approved test cases
         run: npm run conformance:all
 
