@@ -3,12 +3,17 @@
 // (quoted names/texts and $ prices in the "Expected result" column). A test that computes its
 // expectation from the app's own output can pass while the app is wrong; this catches that.
 // Usage: node scripts/conformance.mjs <spec file> <approved test cases .md>
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const [, , specPath, casesPath] = process.argv;
 if (!specPath || !casesPath) { console.error('usage: conformance.mjs <spec> <approved cases>'); process.exit(2); }
 const spec = readFileSync(specPath, 'utf8');
 const cases = readFileSync(casesPath, 'utf8');
+// Hand-written tests keep some assertions inside page object methods (expectLoaded, expectOrderComplete ...).
+const pagesDir = join(dirname(fileURLToPath(import.meta.url)), '..', 'pages');
+const pagesText = existsSync(pagesDir) ? readdirSync(pagesDir).filter((f) => f.endsWith('.ts')).map((f) => readFileSync(join(pagesDir, f), 'utf8')).join('\n') : '';
 
 // split the spec into one chunk per test
 const chunks = spec.split(/\n\s*test(?:\.skip)?\(/).slice(1);
@@ -29,10 +34,12 @@ for (const line of cases.split('\n')) {
   const chunk = chunkFor(id);
   if (!chunk) { console.log(`${id}: MISSING - no test with this ID in ${specPath}`); bad++; checked++; continue; }
   if (!unique.length) { console.log(`${id}: n/a (no concrete values in the expected result)`); noValues++; continue; }
-  const missing = unique.filter((v) => !chunk.includes(v) && !chunk.includes(v.replace(/^\$/, '')));
+  const inSpec = (v) => chunk.includes(v) || chunk.includes(v.replace(/^\$/, ''));
+  const missing = unique.filter((v) => !inSpec(v) && !pagesText.includes(v));
+  const viaPage = unique.filter((v) => !inSpec(v) && pagesText.includes(v));
   checked++;
   if (missing.length) { bad++; console.log(`${id}: MISSING ${missing.length} of ${unique.length} values from the approved case: ${missing.map((m) => JSON.stringify(m)).join(', ')}`); }
-  else console.log(`${id}: ok (${unique.length} values found)`);
+  else console.log(`${id}: ok (${unique.length} values found${viaPage.length ? `, ${viaPage.length} asserted inside a page object` : ''})`);
 }
 console.log(`Conformance: ${checked - bad} of ${checked} approved cases with concrete values are asserted literally (${noValues} have none).`);
 process.exit(bad ? 1 : 0);

@@ -21,11 +21,15 @@
     "hunt": "bash scripts/hunt.sh",
     "pipeline": "node scripts/pipeline.mjs",
     "conformance": "node scripts/conformance.mjs",
-    "bug-demo": "bash scripts/bug-demo.sh"
+    "bug-demo": "bash scripts/bug-demo.sh",
+    "conformance:all": "bash scripts/conformance-all.sh"
   },
   "devDependencies": {
     "@playwright/test": "^1.48.0",
     "@types/node": "^22.0.0",
     "typescript": "^5.6.0"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }

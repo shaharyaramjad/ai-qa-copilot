@@ -1,5 +1,7 @@
 # AI QA Copilot
 
+![tests](https://github.com/shaharyaramjad/ai-qa-copilot/actions/workflows/tests.yml/badge.svg)
+
 Personal project: an AI-assisted QA workflow in Playwright + TypeScript.
 Pipeline: **acceptance criteria -> reviewed test cases -> Playwright tests**, with a human approval between steps.
 
@@ -41,6 +43,10 @@ Prove a test can fail: `npm run break-check` breaks one expectation on purpose, 
 | `npm run bug-demo` | Runs the sorting tests as `standard_user` and as `problem_user` (SauceDemo's buggy user). |
 | `npm run agent` | Opens OpenCode with the Playwright planner, generator and healer. |
 
+## CI
+
+`.github/workflows/tests.yml` runs on every push to `main`, on pull requests and once a night (to notice when the demo site changes): typecheck, `npm run conformance:all` (every feature's tests must assert the values in its approved test cases), then all Playwright tests. The HTML report is uploaded as an artifact. CI makes no AI calls and uses no secrets.
+
 ## Proof so far (from real runs)
 
 - 31 tests plus a login seed for the agents; all pass for `standard_user`.
@@ -68,7 +74,7 @@ Prove a test can fail: `npm run break-check` breaks one expectation on purpose, 
 | 5 | Skills + hooks: gate script, gate plugin, write-playwright-test skill | done (plugin pop-ups not yet confirmed) |
 | 6 | Custom agents: test reviewer, flaky hunter | done |
 | 7 | One-command pipeline with 2 human gates | done (reviewer step waits for free quota) |
-| 8 | CI (GitHub Actions) + bug report / maintenance agents | todo |
+| 8 | CI (GitHub Actions): typecheck, conformance, tests on every push and nightly. Bug report / maintenance agents still todo | CI built, first run on GitHub pending |
 | 9 | Prove it: break the app (bug demo done), measure time saved, pitch | in progress |
 | 10 | Package as a starter kit (one-click setup, docs, license) | todo |
 

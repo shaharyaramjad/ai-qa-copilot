@@ -64,3 +64,6 @@ Goal: AC -> reviewed test cases -> Playwright tests, with human approval between
 - Stages: AI review of `docs/ac/<feature>.md` -> AI drafts test cases -> approved cases in `docs/test-cases/` -> AI writes `tests/<feature>.spec.ts` (missing page object methods are added in a separate step) -> typecheck, tests, reviewer agent, break-check -> `ai-output/<feature>-pipeline-report.md`.
 - Never skip a gate, never approve cases for the human, never edit the approved cases to fit the tests.
 - Expected values from an approved test case (names, prices, texts, counts) are asserted as literals in the spec. Never compute an expectation from the app's own output. `scripts/conformance.mjs` checks this and the pipeline runs it.
+
+## CI (Step 8)
+- `.github/workflows/tests.yml` runs typecheck, `npm run conformance:all` and the whole suite on every push and nightly. No AI calls, no secrets in CI. A red CI run is a signal to investigate, never to edit a test to get green.
