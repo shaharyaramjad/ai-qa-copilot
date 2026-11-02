@@ -47,6 +47,18 @@ Prove a test can fail: `npm run break-check` breaks one expectation on purpose, 
 
 `.github/workflows/tests.yml` runs on every push to `main`, on pull requests and once a night (to notice when the demo site changes): typecheck, `npm run conformance:all` (every feature's tests must assert the values in its approved test cases), then all Playwright tests. The HTML report is uploaded as an artifact. CI makes no AI calls and uses no secrets.
 
+## Without and with the pipeline
+
+| Step | By hand | With AI QA Copilot |
+|---|---|---|
+| Read the acceptance criteria for gaps | You read them | AI lists questions, you answer (gate 1) |
+| Write test cases | You write them | AI drafts, you edit and approve (gate 2) |
+| Write the Playwright spec and page objects | You write them | AI drafts them; typecheck and tests run at once |
+| Trust the result | "It passes" | Conformance (every approved value is asserted), break-check (the test can fail), reviewer agent, CI |
+| Prove it catches bugs | Rarely done | `npm run bug-demo`: 4 of 8 sorting tests fail on a buggy user |
+
+Measured: AI working time for the sorting feature was about 3.5 minutes (review, cases, tests, page objects). I have not yet timed the same feature by hand, so I make no "time saved" claim until I do.
+
 ## Proof so far (from real runs)
 
 - 31 tests plus a login seed for the agents; all pass for `standard_user`.
