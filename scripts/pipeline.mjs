@@ -166,14 +166,29 @@ if (tc.code === 0) {
   const failed = Number((t.out.match(/(\d+) failed/) ?? [])[1] ?? 0);
   rep.tests = `${passed} passed, ${failed} failed`;
   say(`Tests: ${rep.tests}`);
+  if (/net::ERR_(TIMED_OUT|INTERNET_DISCONNECTED|NAME_NOT_RESOLVED|CONNECTION_(REFUSED|RESET|TIMED_OUT))/.test(t.out)) {
+    say(`\nThe site could not be reached (network error). This is NOT a test failure.`);
+    say(`Check your internet connection and that https://www.saucedemo.com opens in a browser, then run again:  npm run pipeline -- ${feature}`);
+    mark('4 checks aborted', 0, 'site unreachable');
+    process.exit(1);
+  }
   if (failed) say(t.out.split('\n').slice(-25).join('\n'));
   rep.testsOk = t.code === 0;
 }
 
-const rv = sh('bash', ['scripts/review.sh', P.spec], { show: false });
-const rs = rv.out.match(/Summary \(counted by the script\): (\d+) of (\d+) tests have problems, (\d+) findings/);
-rep.review = rs ? `${rs[1]} of ${rs[2]} tests flagged (${rs[3]} findings)` : 'reviewer did not finish';
-rep.reviewOut = rv.out;
+let rs = null;
+if (has('skip-review')) {
+  rep.review = 'skipped by you (--skip-review)';
+  rep.reviewOut = '';
+  rep.reviewerMissing = true;
+} else {
+  const rv = sh('bash', ['scripts/review.sh', P.spec], { show: false });
+  rs = rv.out.match(/Summary \(counted by the script\): (\d+) of (\d+) tests have problems, (\d+) findings/);
+  const unavailable = /REVIEWER UNAVAILABLE/.test(rv.out);
+  rep.review = rs ? `${rs[1]} of ${rs[2]} tests flagged (${rs[3]} findings)` : unavailable ? 'NOT RUN: free models rate-limited, run npm run review later' : 'reviewer did not finish';
+  rep.reviewOut = rv.out;
+  rep.reviewerMissing = !rs;
+}
 say(`Reviewer: ${rep.review}`);
 
 const cf = sh('node', ['scripts/conformance.mjs', P.spec, P.approved], { show: false });
@@ -191,7 +206,7 @@ if (rep.testsOk) {
     const b = sh('bash', ['scripts/break-check.sh', P.spec, id], { show: false });
     const res = (b.out.match(/RESULT: (PASS|FAIL|UNCLEAR)/) ?? [])[1] ?? (b.code === 2 ? 'NOT BREAKABLE' : 'ERROR');
     rep.breaks.push(`${id}: ${res}`);
-    say(`Break check ${id}: ${res}`);
+    say(`Break check ${id}: ${res}${res === 'NOT BREAKABLE' ? ' (no expected text to change; prove it by hand if it matters)' : ''}`);
   }
 } else {
   say('Break checks skipped (tests must pass first).');
@@ -215,6 +230,7 @@ md += `\n## Conformance details\n\`\`\`\n${rep.conformanceOut || ''}\`\`\`\n`;
 md += `\n## Reviewer output\n${rep.reviewOut || ''}\n`;
 writeFileSync(P.report, md);
 say(`\nReport saved: ${P.report}`);
-say(rep.typecheck === 'PASS' && rep.testsOk && rep.conformanceOk && rep.breaks.every((b) => /PASS$/.test(b)) && rs && rs[1] === '0'
-  ? '\nPIPELINE RESULT: all checks passed. Read the tests once, then commit.'
-  : '\nPIPELINE RESULT: needs your attention. Read the report above.');
+const othersOk = rep.typecheck === 'PASS' && rep.testsOk && rep.conformanceOk && rep.breaks.every((b) => /(PASS|NOT BREAKABLE)$/.test(b)) && rep.breaks.some((b) => /PASS$/.test(b));
+if (othersOk && rs && rs[1] === '0') say('\nPIPELINE RESULT: all checks passed. Read the tests once, then commit.');
+else if (othersOk && rep.reviewerMissing) say(`\nPIPELINE RESULT: tests, conformance and break checks passed, but the reviewer did not run. Run it later: npm run review -- ${P.spec}  (or accept the risk with --skip-review)`);
+else say('\nPIPELINE RESULT: needs your attention. Read the report above.');

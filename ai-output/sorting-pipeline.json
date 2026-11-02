@@ -1,0 +1,70 @@
+{
+  "events": [
+    {
+      "stage": "1 ai-review",
+      "at": "2026-11-01T20:59:04.457Z",
+      "seconds": 12,
+      "note": ""
+    },
+    {
+      "stage": "2 ai-test-cases",
+      "at": "2026-11-01T21:01:12.202Z",
+      "seconds": 33,
+      "note": ""
+    },
+    {
+      "stage": "GATE 2 approved by human",
+      "at": "2026-11-01T21:02:33.713Z",
+      "seconds": 0,
+      "note": "docs/test-cases/sorting.md"
+    },
+    {
+      "stage": "3 ai-automate",
+      "at": "2026-11-01T21:02:57.114Z",
+      "seconds": 23,
+      "note": ""
+    },
+    {
+      "stage": "3b ai-page-objects",
+      "at": "2026-11-01T21:04:22.300Z",
+      "seconds": 85,
+      "note": ""
+    },
+    {
+      "stage": "4 checks",
+      "at": "2026-11-01T21:05:40.704Z",
+      "seconds": 0,
+      "note": "8 passed, 0 failed; reviewer 0 of 8 tests flagged (0 findings)"
+    },
+    {
+      "stage": "3 ai-automate",
+      "at": "2026-11-01T21:14:54.899Z",
+      "seconds": 63,
+      "note": ""
+    },
+    {
+      "stage": "4 checks",
+      "at": "2026-11-01T21:18:21.502Z",
+      "seconds": 0,
+      "note": "8 passed, 0 failed; reviewer 0 of 8 tests flagged (0 findings)"
+    },
+    {
+      "stage": "4 checks",
+      "at": "2026-11-01T21:25:05.270Z",
+      "seconds": 0,
+      "note": "8 passed, 0 failed; reviewer 1 of 8 tests flagged (1 findings)"
+    },
+    {
+      "stage": "4 checks",
+      "at": "2026-11-01T22:05:43.680Z",
+      "seconds": 0,
+      "note": "0 passed, 8 failed; reviewer reviewer did not finish"
+    },
+    {
+      "stage": "4 checks",
+      "at": "2026-11-02T07:00:18.116Z",
+      "seconds": 0,
+      "note": "8 passed, 0 failed; reviewer reviewer did not finish"
+    }
+  ]
+}

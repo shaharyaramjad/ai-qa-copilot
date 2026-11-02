@@ -1,0 +1,5 @@
+[0m
+> test-reviewer · auto
+[0m
+[0m→ [0mRead tests/sorting.spec.ts[90m [limit=2000][0m
+[91m[1mError: [0mAll models exhausted: 21 routes checked (11 rate-limited or on cooldown, 4 prompt too large for the model, 6 model lacks tool-calling). Add more API keys or wait for rate limits to reset. Soonest reset ~53m. 382 models skipped: no key configured for their platform.

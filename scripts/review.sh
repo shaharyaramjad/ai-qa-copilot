@@ -17,13 +17,19 @@ OUT="ai-output/review-$NAME.md"
 if [ -d "$TARGET" ]; then FILES=$(ls "$TARGET"/*.ts); else FILES="$TARGET"; fi
 
 review_one() {
-  # Up to 3 tries: a complete report ends with a "Summary:" line.
+  # Up to 3 tries of at most 3 minutes each: a complete report ends with a "Summary:" line.
   for attempt in 1 2 3; do
-    RAW="$(opencode run --agent test-reviewer "Review the file $1. Read it and any page objects it uses. Follow your instructions exactly and finish with the Summary line." 2>&1)"
-    REPORT="$(printf '%s\n' "$RAW" | awk '/^\|/ {p=1} p')"
-    if printf '%s\n' "$REPORT" | grep -q '^Summary:'; then
+    RAW="$(perl -e 'alarm 180; exec @ARGV' opencode run --agent test-reviewer "Review the file $1. Read it and any page objects it uses. Follow your instructions exactly and finish with the Summary line." 2>&1)"
+    RC=$?
+    if printf '%s\n' "$RAW" | grep -q 'All models exhausted'; then
+      echo "REVIEWER UNAVAILABLE: the free models are rate-limited or cannot use tools right now. Wait for the limits to reset (the router says how long) or add another free provider key, then run: npm run review -- $1"
+      printf '%s\n' "$RAW" | grep 'All models exhausted' | cut -c1-300
+      return 3
+    fi
+    REPORT="$(printf '%s\n' "$RAW" | awk '/^[[:space:]]*\|/ {p=1} p')"
+    if printf '%s\n' "$REPORT" | grep -Eq '^[[:space:]*]*Summary:'; then
       # The free model sometimes miscounts in its own Summary line, so we count it ourselves.
-      TABLE="$(printf '%s\n' "$REPORT" | grep -v '^Summary:')"
+      TABLE="$(printf '%s\n' "$REPORT" | grep -Ev '^[[:space:]*]*Summary:')"
       BAD=$(printf '%s\n' "$TABLE" | awk -F'|' '$3 ~ /PROBLEM/ { gsub(/^ +| +$/, "", $2); if ($2 != "Global") seen[$2]=1 } END { n=0; for (k in seen) n++; print n }')
       ROWS=$(printf '%s\n' "$TABLE" | grep -c 'PROBLEM')
       TOTAL=$(grep -cE '^[[:space:]]*test(\.(skip|fixme))?\(' "$1")
@@ -31,7 +37,9 @@ review_one() {
       echo "Summary (counted by the script): $BAD of $TOTAL tests have problems, $ROWS findings."
       return 0
     fi
-    echo "(attempt $attempt gave an incomplete answer, retrying)" >&2
+    RAWFILE="ai-output/review-raw-$NAME-attempt$attempt.txt"
+    printf '%s\n' "$RAW" > "$RAWFILE"
+    echo "(attempt $attempt gave an incomplete answer, exit code $RC, raw reply saved to $RAWFILE, retrying)" >&2
   done
   echo "INCOMPLETE REPORT for $1 after 3 attempts"
   return 1
